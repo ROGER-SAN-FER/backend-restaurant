@@ -56,6 +56,13 @@
             <version>2.3.0</version>
         </dependency>
 
+        <dependency><!-- Para Lombok -->
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.38</version> <!-- comprueba la última versión en Maven Central -->
+            <scope>provided</scope>
+        </dependency>
+
     </dependencies>
 
     <build>
