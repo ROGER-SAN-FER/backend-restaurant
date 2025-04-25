@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-@Transactional
+@Transactional // Si lanza una excepción unchecked (por defecto cualquier RuntimeException), Spring hace rollback de todo lo que se haya hecho hasta ese momento.
 public class TipoServiceImpl implements TipoService {
 
     @Autowired

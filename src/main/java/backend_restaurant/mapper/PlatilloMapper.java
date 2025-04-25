@@ -34,13 +34,15 @@ public class PlatilloMapper {
     public Platillo toEntity(PlatilloDto dto) {
         if (dto == null) return null;
         Platillo entity = new Platillo();
-        entity.setId(dto.getId());
+        // Sólo setea el ID si el DTO lo trae (en actualizaciones)
+        if (dto.getId() != null) {
+            entity.setId(dto.getId());
+        }
         entity.setNombre(dto.getNombre());
         entity.setPrecio(dto.getPrecio());
         if (dto.getTipoId() != null) {
             Tipo tipo = new Tipo();
             tipo.setId(dto.getTipoId());
-            // No seteamos nombre; el service lo obtendrá de BD
             entity.setTipo(tipo);
         }
         return entity;

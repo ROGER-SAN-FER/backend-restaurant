@@ -1,7 +1,6 @@
 package backend_restaurant.service;
 
 import backend_restaurant.model.Tipo;
-
 import java.util.List;
 
 public interface TipoService {

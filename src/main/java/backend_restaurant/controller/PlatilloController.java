@@ -27,14 +27,22 @@ public class PlatilloController {
 //        this.platilloService = platilloService;
 //    }
 
-//    @GetMapping
-//    public List<Platillo> listarTodos() {
-//        return platilloService.listarTodos();
-//    }
-
     @GetMapping
     public List<PlatilloDto> listarTodos() {
         return platilloService.listarTodos()
+                .stream()
+                .map(mapper::toDto)
+                .toList();
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Platillo> obtenerPorId(@PathVariable Long id) {
+        return ResponseEntity.ok(platilloService.obtenerPorId(id));
+    }
+
+    @GetMapping("/tipo/{tipoId}")
+    public List<PlatilloDto> listarPorTipo(@PathVariable Long tipoId) {
+        return platilloService.listarPorTipo(tipoId)
                 .stream()
                 .map(mapper::toDto)
                 .toList();
@@ -44,35 +52,19 @@ public class PlatilloController {
     public ResponseEntity<PlatilloDto> crear(@RequestBody PlatilloDto dto) {
         Platillo entidad = mapper.toEntity(dto);
         Platillo creado = platilloService.crear(entidad);
+        URI location = URI.create("/api/platillos/" + creado.getId());
         return ResponseEntity
-                .created(URI.create("/api/platillos/" + creado.getId()))
+                .created(location)
                 .body(mapper.toDto(creado));
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Platillo> obtenerPorId(@PathVariable Long id) {
-        return ResponseEntity.ok(platilloService.obtenerPorId(id));
-    }
-
-    @GetMapping("/tipo/{tipoId}")
-    public List<Platillo> listarPorTipo(@PathVariable Long tipoId) {
-        return platilloService.listarPorTipo(tipoId);
-    }
-
-//    @PostMapping
-//    public ResponseEntity<Platillo> crear(@RequestBody Platillo platillo) {
-//        Platillo creado = platilloService.crear(platillo);
-//        return ResponseEntity
-//                .created(null)  // podrías usar URI.create("/api/platillos/" + creado.getId())
-//                .body(creado);
-//    }
-
     @PutMapping("/{id}")
-    public ResponseEntity<Platillo> actualizar(
+    public ResponseEntity<PlatilloDto> actualizar(
             @PathVariable Long id,
-            @RequestBody Platillo platilloDatos) {
-        Platillo actualizado = platilloService.actualizar(id, platilloDatos);
-        return ResponseEntity.ok(actualizado);
+            @RequestBody PlatilloDto platilloDatos) {
+        Platillo entidad = mapper.toEntity(platilloDatos);
+        Platillo actualizado = platilloService.actualizar(id, entidad);
+        return ResponseEntity.ok(mapper.toDto(actualizado));
     }
 
     @DeleteMapping("/{id}")
