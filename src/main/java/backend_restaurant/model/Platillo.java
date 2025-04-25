@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.List;
+
 @Entity
 @Data
 @Table(name = "platillos")
@@ -15,6 +17,7 @@ public class Platillo {
 
     private String nombre;
     private Double precio;
+    private List<String> insumos;
 
     @ManyToOne(
             fetch = FetchType.LAZY, // No carga el Tipo hasta que se llame a getTipo()

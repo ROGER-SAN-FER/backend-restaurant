@@ -24,6 +24,7 @@ public class PlatilloMapper {
         dto.setId(entity.getId());
         dto.setNombre(entity.getNombre());
         dto.setPrecio(entity.getPrecio());
+        dto.setInsumos(entity.getInsumos());
         if (entity.getTipo() != null) {
             dto.setTipoId(entity.getTipo().getId());
             dto.setTipoNombre(entity.getTipo().getNombre());
@@ -40,6 +41,7 @@ public class PlatilloMapper {
         }
         entity.setNombre(dto.getNombre());
         entity.setPrecio(dto.getPrecio());
+        entity.setInsumos(dto.getInsumos());
         if (dto.getTipoId() != null) {
             Tipo tipo = new Tipo();
             tipo.setId(dto.getTipoId());
