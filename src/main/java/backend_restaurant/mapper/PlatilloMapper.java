@@ -4,49 +4,25 @@ package backend_restaurant.mapper;
 import backend_restaurant.dto.PlatilloDto;
 import backend_restaurant.model.Platillo;
 import backend_restaurant.model.Tipo;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
-@Component
-public class PlatilloMapper {
+@Mapper(componentModel = "spring", uses = TipoMapperHelper.class)
+public interface PlatilloMapper {
 
-    @Autowired
-    private TipoMapper tipoMapper;
-//    private final TipoMapper tipoMapper;
-//
-//    public PlatilloMapper(TipoMapper tipoMapper) {
-//        this.tipoMapper = tipoMapper;
+    @Mapping(source = "tipo.id", target = "tipoId")
+    @Mapping(source = "tipo.nombre", target = "tipoNombre")
+    PlatilloDto toDTO(Platillo platillo);
+
+    @Mapping(source = "tipoId", target = "tipo")
+    @Mapping(target = "tipoNombre", ignore = true)
+    Platillo toEntity(PlatilloDto platilloDto);
+
+    // Metodo auxiliar para convertir el tipoId a un objeto Tipo
+//    default Tipo map(Long tipoId) {
+//        if (tipoId == null) return null;
+//        Tipo tipo = new Tipo();
+//        tipo.setId(tipoId);
+//        return tipo;
 //    }
-
-    public PlatilloDto toDto(Platillo entity) {
-        if (entity == null) return null;
-        PlatilloDto dto = new PlatilloDto();
-        dto.setId(entity.getId());
-        dto.setNombre(entity.getNombre());
-        dto.setPrecio(entity.getPrecio());
-        dto.setInsumos(entity.getInsumos());
-        if (entity.getTipo() != null) {
-            dto.setTipoId(entity.getTipo().getId());
-            dto.setTipoNombre(entity.getTipo().getNombre());
-        }
-        return dto;
-    }
-
-    public Platillo toEntity(PlatilloDto dto) {
-        if (dto == null) return null;
-        Platillo entity = new Platillo();
-        // Sólo setea el ID si el DTO lo trae (en actualizaciones)
-        if (dto.getId() != null) {
-            entity.setId(dto.getId());
-        }
-        entity.setNombre(dto.getNombre());
-        entity.setPrecio(dto.getPrecio());
-        entity.setInsumos(dto.getInsumos());
-        if (dto.getTipoId() != null) {
-            Tipo tipo = new Tipo();
-            tipo.setId(dto.getTipoId());
-            entity.setTipo(tipo);
-        }
-        return entity;
-    }
 }

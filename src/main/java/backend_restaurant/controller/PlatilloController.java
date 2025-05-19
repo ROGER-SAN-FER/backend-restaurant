@@ -1,7 +1,7 @@
 package backend_restaurant.controller;
 
 import backend_restaurant.dto.PlatilloDto;
-import backend_restaurant.mapper.PlatilloMapper;
+import backend_restaurant.mapper.PlatilloMapperTradicional;
 import backend_restaurant.model.Platillo;
 import backend_restaurant.service.PlatilloService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,16 +16,12 @@ import java.util.List;
 public class PlatilloController {
 
     @Autowired
-    private PlatilloService platilloService;
+    private PlatilloMapperTradicional mapper;
 
-    @Autowired
-    private PlatilloMapper mapper;
-
-//    private final PlatilloService platilloService;
-//
-//    public PlatilloController(PlatilloService platilloService) {
-//        this.platilloService = platilloService;
-//    }
+    private final PlatilloService platilloService;
+    public PlatilloController(PlatilloService platilloService) {
+        this.platilloService = platilloService;
+    }
 
     @GetMapping
     public List<PlatilloDto> listarTodos() {
