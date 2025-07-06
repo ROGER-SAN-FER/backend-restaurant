@@ -6,6 +6,8 @@ import backend_restaurant.model.Platillo;
 import backend_restaurant.model.Tipo;
 import org.springframework.stereotype.Component;
 
+import java.util.Base64;
+
 @Component
 public class PlatilloMapperTradicional {
 //
@@ -24,6 +26,12 @@ public class PlatilloMapperTradicional {
         dto.setNombre(entity.getNombre());
         dto.setPrecio(entity.getPrecio());
         dto.setInsumos(entity.getInsumos());
+//
+//        // Conversión de byte[] a Base64
+//        if (entity.getFoto() != null) {
+//            dto.setFoto(Base64.getEncoder().encodeToString(entity.getFoto()));
+//        }
+
         if (entity.getTipo() != null) {
             dto.setTipoId(entity.getTipo().getId());
             dto.setTipoNombre(entity.getTipo().getNombre());
@@ -41,6 +49,12 @@ public class PlatilloMapperTradicional {
         entity.setNombre(dto.getNombre());
         entity.setPrecio(dto.getPrecio());
         entity.setInsumos(dto.getInsumos());
+//
+//        // Conversión de Base64 a byte[]
+//        if (dto.getFoto() != null && !dto.getFoto().isEmpty()) {
+//            entity.setFoto(Base64.getDecoder().decode(dto.getFoto()));
+//        }
+
         if (dto.getTipoId() != null) {
             Tipo tipo = new Tipo();
             tipo.setId(dto.getTipoId());

@@ -3,6 +3,7 @@ package backend_restaurant.model;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.Type;
 
 import java.util.List;
 
@@ -29,4 +30,8 @@ public class Platillo {
     )
     @JsonBackReference        // Lado “hijo” en la serialización JSON; evita ciclos con Tipo
     private Tipo tipo;        // Tipo al que pertenece este Platillo (entrante, principal, postre…)
+//
+//    @Lob
+//    @Column(name = "foto")
+//    private byte[] foto;
 }

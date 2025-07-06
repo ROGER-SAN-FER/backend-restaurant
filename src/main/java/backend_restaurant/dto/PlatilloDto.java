@@ -14,4 +14,7 @@ public class PlatilloDto {
     // Solo llevamos el ID y nombre del tipo
     private Long tipoId;
     private String tipoNombre;
+//
+//    // Nueva propiedad: la imagen en Base64
+//    private String foto;
 }

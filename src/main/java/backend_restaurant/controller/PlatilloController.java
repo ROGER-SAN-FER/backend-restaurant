@@ -4,7 +4,7 @@ import backend_restaurant.dto.PlatilloDto;
 import backend_restaurant.mapper.PlatilloMapperTradicional;
 import backend_restaurant.model.Platillo;
 import backend_restaurant.service.PlatilloService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,15 +13,12 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/platillos")
+@RequiredArgsConstructor
 public class PlatilloController {
 
-    @Autowired
-    private PlatilloMapperTradicional mapper;
-
+    private final PlatilloMapperTradicional mapper;
     private final PlatilloService platilloService;
-    public PlatilloController(PlatilloService platilloService) {
-        this.platilloService = platilloService;
-    }
+
 
     @GetMapping
     public List<PlatilloDto> listarTodos() {
