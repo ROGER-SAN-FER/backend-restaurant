@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-@Transactional
+//@Transactional
 public class PlatilloServiceImpl implements PlatilloService {
 
     @Autowired
@@ -29,17 +29,20 @@ public class PlatilloServiceImpl implements PlatilloService {
 //    }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Platillo> listarTodos() {
         return platilloRepo.findAll();
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Platillo obtenerPorId(Long id) {
         return platilloRepo.findById(id)
                 .orElseThrow(() -> new RuntimeException("Platillo no encontrado"));
     }
 
     @Override
+    @Transactional
     public Platillo crear(Platillo platillo) {
         // opcional: validar que el tipo exista
         Tipo tipo = tipoRepo.findById(platillo.getTipo().getId())
@@ -49,6 +52,7 @@ public class PlatilloServiceImpl implements PlatilloService {
     }
 
     @Override
+    @Transactional
     public Platillo actualizar(Long id, Platillo datos) {
         Platillo existente = obtenerPorId(id);
         existente.setNombre(datos.getNombre());
@@ -61,11 +65,13 @@ public class PlatilloServiceImpl implements PlatilloService {
     }
 
     @Override
+    @Transactional
     public void eliminar(Long id) {
         platilloRepo.deleteById(id);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Platillo> listarPorTipo(Long tipoId) {
         return platilloRepo.findAllByTipo_Id(tipoId);
     }
