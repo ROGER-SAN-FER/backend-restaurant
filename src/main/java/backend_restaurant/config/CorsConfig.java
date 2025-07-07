@@ -15,7 +15,7 @@ public class CorsConfig {
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**") // todos los endpoints
                         .allowedOrigins(
-                                "https://frontend.com",
+                                "http://localhost:3000",
                                 "https://antojo.vercel.app"
                         ) //     cambia por el dominio de tu frontend
                         .allowedMethods("GET", "POST", "PUT", "DELETE")
