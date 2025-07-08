@@ -20,8 +20,9 @@ public class CorsConfig {
                                 "http://localhost:5173/",//roger
                                 "https://frontend-pruebas.vercel.app/"//roger
                         ) //     cambia por el dominio de tu frontend
-                        .allowedMethods("GET", "POST", "PUT", "DELETE")
-                        .allowedHeaders("*");
+                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                        .allowedHeaders("*")
+                        .allowCredentials(true);
             }
         };
     }

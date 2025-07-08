@@ -33,9 +33,11 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .httpBasic(Customizer.withDefaults())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(http ->
+                .authorizeHttpRequests(auth ->
                         {
-                            http
+                            auth
+                                    // PERMITIR OPTIONS
+                                    .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                                     // Permitir todos los GET sin autenticación
                                     .requestMatchers(HttpMethod.GET, "/api/platillos/**").permitAll()
                                     .requestMatchers(HttpMethod.GET, "/api/tipos/**").permitAll()
@@ -45,7 +47,8 @@ public class SecurityConfig {
                                     .requestMatchers(HttpMethod.PUT, "/api/platillos/**").hasRole("ADMIN")
                                     .requestMatchers(HttpMethod.PUT, "/api/tipos/**").hasRole("ADMIN")
                                     .requestMatchers(HttpMethod.DELETE, "/api/platillos/**").hasRole("ADMIN")
-                                    .requestMatchers(HttpMethod.DELETE, "/api/tipos/**").hasRole("ADMIN");
+                                    .requestMatchers(HttpMethod.DELETE, "/api/tipos/**").hasRole("ADMIN")
+                                    .anyRequest().denyAll();
                         }
                 ).build();
     }
