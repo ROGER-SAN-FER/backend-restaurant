@@ -17,7 +17,8 @@ public class CorsConfig {
                         .allowedOrigins(
                                 "http://localhost:3000",//sorin
                                 "https://antojo.vercel.app",//sorin
-                                "http://localhost:5173/"//roger
+                                "http://localhost:5173/",//roger
+                                "https://frontend-pruebas.vercel.app/"//roger
                         ) //     cambia por el dominio de tu frontend
                         .allowedMethods("GET", "POST", "PUT", "DELETE")
                         .allowedHeaders("*");
