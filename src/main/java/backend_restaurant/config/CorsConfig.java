@@ -17,12 +17,14 @@ public class CorsConfig {
                         .allowedOrigins(
                                 "http://localhost:3000",//sorin
                                 "https://antojo.vercel.app",//sorin
-                                "http://localhost:5173/",//roger
-                                "https://frontend-pruebas.vercel.app/"//roger
+                                "http://localhost:5173",//roger
+                                "https://frontend-pruebas.vercel.app"//roger
                         ) //     cambia por el dominio de tu frontend
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*")
-                        .allowCredentials(true);
+                        .exposedHeaders("*")
+                        .allowCredentials(true)
+                        .maxAge(3600); // Opcional, reduce preflight requests
             }
         };
     }
