@@ -7,6 +7,9 @@ WORKDIR /app
 # Copia todos los archivos del proyecto al contenedor
 COPY . .
 
+# Da permisos de ejecución al archivo mvnw dentro del contenedor
+RUN chmod +x ./mvnw
+
 # Ejecuta Maven Wrapper para compilar el proyecto y empaquetar el .jar, omitiendo los tests
 RUN ./mvnw clean package -DskipTests
 
