@@ -42,6 +42,8 @@ public class SecurityConfig {
                                     // Permitir todos los GET sin autenticación
                                     .requestMatchers(HttpMethod.GET, "/api/platillos/**").permitAll()
                                     .requestMatchers(HttpMethod.GET, "/api/tipos/**").permitAll()
+//                                    .requestMatchers(HttpMethod.GET, "/api/platillos/**").authenticated()
+//                                    .requestMatchers(HttpMethod.GET, "/api/tipos/**").authenticated()
                                     // Restringir POST, PUT, DELETE solo a ADMIN
                                     .requestMatchers(HttpMethod.POST, "/api/platillos/**").hasRole("ADMIN")
                                     .requestMatchers(HttpMethod.POST, "/api/tipos/**").hasRole("ADMIN")

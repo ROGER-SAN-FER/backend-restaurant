@@ -1,21 +1,12 @@
 package backend_restaurant;
 
-import backend_restaurant.security.model.PermissionEntity;
-import backend_restaurant.security.model.RoleEntity;
-import backend_restaurant.security.model.RoleEnum;
-import backend_restaurant.security.model.UserEntity;
-import backend_restaurant.security.repository.UserRepository;
 import com.zaxxer.hikari.HikariDataSource;
 import jakarta.annotation.PreDestroy;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
 
 import javax.sql.DataSource;
-import java.util.List;
-import java.util.Set;
 
 @SpringBootApplication
 public class BackendRestaurantApplication {

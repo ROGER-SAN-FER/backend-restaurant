@@ -1,26 +1,31 @@
 package backend_restaurant.controller;
 
 
+import backend_restaurant.dto.TipoDto;
+import backend_restaurant.mapper.TipoMapper;
 import backend_restaurant.model.Tipo;
 import backend_restaurant.service.TipoService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/tipos")
 public class TipoController {
 
     private final TipoService tipoService;
+    private final TipoMapper tipoMapper;
 
-    public TipoController(TipoService tipoService) {
+    public TipoController(TipoService tipoService, TipoMapper tipoMapper) {
         this.tipoService = tipoService;
+        this.tipoMapper = tipoMapper;
     }
 
     @GetMapping
-    public List<Tipo> listarTodos() {
-        return tipoService.listarTodos();
+    public List<TipoDto> listarTodosDTO() {
+        return tipoService.listarTodos().stream().map(tipoMapper::toDto).collect(Collectors.toList());
     }
 
     @GetMapping("/{id}")
