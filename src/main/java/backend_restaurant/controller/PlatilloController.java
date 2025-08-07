@@ -1,7 +1,6 @@
 package backend_restaurant.controller;
 
 import backend_restaurant.dto.PlatilloDto;
-import backend_restaurant.mapper.PlatilloMapperTradicional;
 import backend_restaurant.model.Platillo;
 import backend_restaurant.service.PlatilloService;
 import lombok.RequiredArgsConstructor;
