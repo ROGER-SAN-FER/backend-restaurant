@@ -61,9 +61,12 @@ public class PlatilloController {
                 .body(mapper.toDto(platilloActualizado));
     }
 
+    // eliminar platillo
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> eliminar(@PathVariable Long id) {
+    public ResponseEntity<String> eliminar(@PathVariable Long id) {
         platilloService.eliminar(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body("Platillo con id = " + id + " eliminado");
     }
 }

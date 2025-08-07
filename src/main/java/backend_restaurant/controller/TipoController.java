@@ -1,6 +1,5 @@
 package backend_restaurant.controller;
 
-
 import backend_restaurant.dto.TipoDto;
 import backend_restaurant.mapper.TipoMapper;
 import backend_restaurant.model.Tipo;
@@ -9,7 +8,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -58,9 +56,12 @@ public class TipoController {
                 .body(tipoMapper.toDto(tipoActualizado));
     }
 
+
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> eliminar(@PathVariable Long id) {
+    public ResponseEntity<String> eliminar(@PathVariable Long id) {
         tipoService.eliminar(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body("Tipo con id = " + id + " eliminado");
     }
 }
