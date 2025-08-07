@@ -60,10 +60,4 @@ public class PlatilloServiceImpl implements PlatilloService {
     public void eliminar(Long id) {
         platilloRepo.deleteById(id);
     }
-
-    @Override
-    @Transactional(readOnly = true)
-    public List<Platillo> listarPorTipo(Long tipoId) {
-        return platilloRepo.findAllByTipo_Id(tipoId);
-    }
 }

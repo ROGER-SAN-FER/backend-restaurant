@@ -1,9 +1,11 @@
 package backend_restaurant.controller;
 
-import backend_restaurant.dto.TipoDto;
+import backend_restaurant.dto.TipoRequestDto;
+import backend_restaurant.dto.TipoResponseDto;
 import backend_restaurant.mapper.TipoMapper;
 import backend_restaurant.model.Tipo;
 import backend_restaurant.service.TipoService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,24 +23,25 @@ public class TipoController {
 
     // mostrar todos los tipos
     @GetMapping
-    public ResponseEntity<List<TipoDto>> listarTodosDTO() {
-        List<TipoDto> listaTiposDto = tipoService.listarTodos().stream().map(tipoMapper::toDto).collect(Collectors.toList());
+    public ResponseEntity<List<TipoResponseDto>> listarTodosDTO() {
+        List<TipoResponseDto> listaTiposDto = tipoService.listarTodos().stream().map(tipoMapper::toDto).collect(Collectors.toList());
         return ResponseEntity
                 .ok(listaTiposDto);
     }
 
     // mostrar tipo por id
     @GetMapping("/{id}")
-    public ResponseEntity<TipoDto> obtenerPorId(@PathVariable Long id) {
-        TipoDto tipoDto =  tipoMapper.toDto(tipoService.obtenerPorId(id));
+    public ResponseEntity<TipoResponseDto> obtenerPorId(@PathVariable Long id) {
+        TipoResponseDto tipoRequestDto =  tipoMapper.toDto(tipoService.obtenerPorId(id));
         return ResponseEntity
-                .ok(tipoDto);
+                .ok(tipoRequestDto);
     }
 
     // crear tipo
     @PostMapping
-    public ResponseEntity<TipoDto> crear(@RequestBody Tipo tipo) {
-        Tipo tipoCreado = tipoService.crear(tipo);
+    public ResponseEntity<TipoResponseDto> crear(@RequestBody @Valid TipoRequestDto tipoRequestDto) {
+        Tipo tipoEntity = tipoMapper.toEntity(tipoRequestDto);
+        Tipo tipoCreado = tipoService.crear(tipoEntity);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(tipoMapper.toDto(tipoCreado));
@@ -46,10 +49,10 @@ public class TipoController {
 
     // actualizar tipo
     @PutMapping("/{id}")
-    public ResponseEntity<TipoDto> actualizar(
+    public ResponseEntity<TipoResponseDto> actualizar(
             @PathVariable Long id,
-            @RequestBody TipoDto tipoDto) {
-        Tipo tipo = tipoMapper.toEntity(tipoDto);
+            @RequestBody TipoRequestDto tipoRequestDto) {
+        Tipo tipo = tipoMapper.toEntity(tipoRequestDto);
         Tipo tipoActualizado = tipoService.actualizar(id, tipo);
         return ResponseEntity
                 .status(HttpStatus.OK)
