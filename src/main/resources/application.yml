@@ -26,6 +26,7 @@ server:
     include-binding-errors: always
 
 ---
+# perfil de desarrollo
 spring:
   config:
     activate:
@@ -42,7 +43,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
     show-sql: true
     properties:
       hibernate:
