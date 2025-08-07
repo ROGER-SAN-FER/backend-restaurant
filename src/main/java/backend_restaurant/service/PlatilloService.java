@@ -9,5 +9,4 @@ public interface PlatilloService {
     Platillo crear(Platillo platillo);
     Platillo actualizar(Long id, Platillo datosActualizados);
     void eliminar(Long id);
-    List<Platillo> listarPorTipo(Long tipoId);
 }
