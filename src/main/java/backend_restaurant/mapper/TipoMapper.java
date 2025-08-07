@@ -8,9 +8,8 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface TipoMapper {
 
-
     TipoDto toDto(Tipo tipo);
 
     @Mapping(target = "platillos", ignore = true)
-    Tipo toTipo(TipoDto tipoDto);
+    Tipo toEntity(TipoDto tipoDto);
 }

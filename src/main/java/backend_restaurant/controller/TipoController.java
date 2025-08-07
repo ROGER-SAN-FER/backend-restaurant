@@ -1,7 +1,6 @@
 package backend_restaurant.controller;
 
 
-import backend_restaurant.dto.PlatilloDto;
 import backend_restaurant.dto.TipoDto;
 import backend_restaurant.mapper.TipoMapper;
 import backend_restaurant.model.Tipo;
@@ -47,12 +46,16 @@ public class TipoController {
                 .body(tipoMapper.toDto(tipoCreado));
     }
 
+    // actualizar tipo
     @PutMapping("/{id}")
-    public ResponseEntity<Tipo> actualizar(
+    public ResponseEntity<TipoDto> actualizar(
             @PathVariable Long id,
-            @RequestBody Tipo tipoDatos) {
-        Tipo actualizado = tipoService.actualizar(id, tipoDatos);
-        return ResponseEntity.ok(actualizado);
+            @RequestBody TipoDto tipoDto) {
+        Tipo tipo = tipoMapper.toEntity(tipoDto);
+        Tipo tipoActualizado = tipoService.actualizar(id, tipo);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(tipoMapper.toDto(tipoActualizado));
     }
 
     @DeleteMapping("/{id}")

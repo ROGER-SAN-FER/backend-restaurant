@@ -49,13 +49,16 @@ public class PlatilloController {
                 .body(mapper.toDto(platilloCreado));
     }
 
+    // actualizar platillo
     @PutMapping("/{id}")
     public ResponseEntity<PlatilloDto> actualizar(
             @PathVariable Long id,
-            @RequestBody PlatilloDto platilloDatos) {
-        Platillo entidad = mapper.toEntity(platilloDatos);
-        Platillo actualizado = platilloService.actualizar(id, entidad);
-        return ResponseEntity.ok(mapper.toDto(actualizado));
+            @RequestBody PlatilloDto platilloDto) {
+        Platillo platillo = mapper.toEntity(platilloDto);
+        Platillo platilloActualizado = platilloService.actualizar(id, platillo);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(mapper.toDto(platilloActualizado));
     }
 
     @DeleteMapping("/{id}")
