@@ -4,6 +4,7 @@ import backend_restaurant.model.Platillo;
 import backend_restaurant.model.Tipo;
 import backend_restaurant.repository.PlatilloRepository;
 import backend_restaurant.repository.TipoRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,22 +12,12 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-//@Transactional
+@RequiredArgsConstructor
 public class PlatilloServiceImpl implements PlatilloService {
 
-    @Autowired
-    private PlatilloRepository platilloRepo;
+    private final PlatilloRepository platilloRepo;
+    private final TipoRepository tipoRepo;
 
-    @Autowired
-    private TipoRepository tipoRepo;
-
-//    private final PlatilloRepository platilloRepo;
-//    private final TipoRepository tipoRepo;
-
-//    public PlatilloServiceImpl(PlatilloRepository platilloRepo, TipoRepository tipoRepo) {
-//        this.platilloRepo = platilloRepo;
-//        this.tipoRepo = tipoRepo;
-//    }
 
     @Override
     @Transactional(readOnly = true)
@@ -53,14 +44,14 @@ public class PlatilloServiceImpl implements PlatilloService {
 
     @Override
     @Transactional
-    public Platillo actualizar(Long id, Platillo datos) {
+    public Platillo actualizar(Long id, Platillo platillo) {
         Platillo existente = obtenerPorId(id);
-        existente.setNombre(datos.getNombre());
-        existente.setPrecio(datos.getPrecio());
-        // actualizar tipo si es distinto
-        Tipo tipo = tipoRepo.findById(datos.getTipo().getId())
+        existente.setNombre(platillo.getNombre());
+        existente.setPrecio(platillo.getPrecio());
+        Tipo tipo = tipoRepo.findById(platillo.getTipo().getId())
                 .orElseThrow(() -> new RuntimeException("Tipo no encontrado"));
         existente.setTipo(tipo);
+        existente.setInsumos(platillo.getInsumos());
         return platilloRepo.save(existente);
     }
 
