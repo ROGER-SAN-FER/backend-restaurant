@@ -5,6 +5,7 @@ import backend_restaurant.mapper.PlatilloMapper;
 import backend_restaurant.model.Platillo;
 import backend_restaurant.service.PlatilloService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,37 +23,30 @@ public class PlatilloController {
     // mostrar todos los platillos
     @GetMapping
     public ResponseEntity<List<PlatilloDto>> listarTodos() {
-        List<PlatilloDto> listaPlatillos= platilloService.listarTodos()
+        List<PlatilloDto> listaPlatillosDto= platilloService.listarTodos()
                 .stream()
                 .map(mapper::toDto)
                 .toList();
         return ResponseEntity
-                .ok(listaPlatillos);
+                .ok(listaPlatillosDto);
     }
 
+    // mostrar platillo por id
     @GetMapping("/{id}")
     public ResponseEntity<PlatilloDto> obtenerPorId(@PathVariable Long id) {
-        PlatilloDto platillo =  mapper.toDto(platilloService.obtenerPorId(id));
+        PlatilloDto platilloDto =  mapper.toDto(platilloService.obtenerPorId(id));
         return ResponseEntity
-                .ok(platillo);
+                .ok(platilloDto);
     }
 
-    @GetMapping("/tipo/{tipoId}")
-    public List<PlatilloDto> listarPorTipo(@PathVariable Long tipoId) {
-        return platilloService.listarPorTipo(tipoId)
-                .stream()
-                .map(mapper::toDto)
-                .toList();
-    }
-
+    // crear platillo
     @PostMapping
     public ResponseEntity<PlatilloDto> crear(@RequestBody PlatilloDto dto) {
-        Platillo entidad = mapper.toEntity(dto);
-        Platillo creado = platilloService.crear(entidad);
-        URI location = URI.create("/api/platillos/" + creado.getId());
+        Platillo platillo = mapper.toEntity(dto);
+        Platillo platilloCreado = platilloService.crear(platillo);
         return ResponseEntity
-                .created(location)
-                .body(mapper.toDto(creado));
+                .status(HttpStatus.CREATED)
+                .body(mapper.toDto(platilloCreado));
     }
 
     @PutMapping("/{id}")

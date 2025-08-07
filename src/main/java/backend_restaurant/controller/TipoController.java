@@ -7,6 +7,7 @@ import backend_restaurant.mapper.TipoMapper;
 import backend_restaurant.model.Tipo;
 import backend_restaurant.service.TipoService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,27 +22,29 @@ public class TipoController {
     private final TipoService tipoService;
     private final TipoMapper tipoMapper;
 
-    // mostrar todos los tipos de platillos
+    // mostrar todos los tipos
     @GetMapping
     public ResponseEntity<List<TipoDto>> listarTodosDTO() {
-        List<TipoDto> listaTipos = tipoService.listarTodos().stream().map(tipoMapper::toDto).collect(Collectors.toList());
+        List<TipoDto> listaTiposDto = tipoService.listarTodos().stream().map(tipoMapper::toDto).collect(Collectors.toList());
         return ResponseEntity
-                .ok(listaTipos);
+                .ok(listaTiposDto);
     }
 
+    // mostrar tipo por id
     @GetMapping("/{id}")
     public ResponseEntity<TipoDto> obtenerPorId(@PathVariable Long id) {
-        TipoDto tipo =  tipoMapper.toDto(tipoService.obtenerPorId(id));
+        TipoDto tipoDto =  tipoMapper.toDto(tipoService.obtenerPorId(id));
         return ResponseEntity
-                .ok(tipo);
+                .ok(tipoDto);
     }
 
+    // crear tipo
     @PostMapping
-    public ResponseEntity<Tipo> crear(@RequestBody Tipo tipo) {
-        Tipo creado = tipoService.crear(tipo);
+    public ResponseEntity<TipoDto> crear(@RequestBody Tipo tipo) {
+        Tipo tipoCreado = tipoService.crear(tipo);
         return ResponseEntity
-                .created(null)              // podrías usar URI de ubicación: URI.create("/api/tipos/" + creado.getId())
-                .body(creado);
+                .status(HttpStatus.CREATED)
+                .body(tipoMapper.toDto(tipoCreado));
     }
 
     @PutMapping("/{id}")
