@@ -19,18 +19,22 @@ public class PlatilloController {
     private final PlatilloMapper mapper;
     private final PlatilloService platilloService;
 
-
+    // mostrar todos los platillos
     @GetMapping
-    public List<PlatilloDto> listarTodos() {
-        return platilloService.listarTodos()
+    public ResponseEntity<List<PlatilloDto>> listarTodos() {
+        List<PlatilloDto> listaPlatillos= platilloService.listarTodos()
                 .stream()
                 .map(mapper::toDto)
                 .toList();
+        return ResponseEntity
+                .ok(listaPlatillos);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Platillo> obtenerPorId(@PathVariable Long id) {
-        return ResponseEntity.ok(platilloService.obtenerPorId(id));
+    public ResponseEntity<PlatilloDto> obtenerPorId(@PathVariable Long id) {
+        PlatilloDto platillo =  mapper.toDto(platilloService.obtenerPorId(id));
+        return ResponseEntity
+                .ok(platillo);
     }
 
     @GetMapping("/tipo/{tipoId}")
