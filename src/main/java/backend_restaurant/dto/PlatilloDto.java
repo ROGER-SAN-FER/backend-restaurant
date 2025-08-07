@@ -8,13 +8,10 @@ import java.util.List;
 public class PlatilloDto {
     private Long id;
     private String nombre;
-    private List<String> insumos;
     private Double precio;
+    private List<String> insumos;
 
-    // Solo llevamos el ID y nombre del tipo
+    // Solo muestro el ID y nombre del tipo del objeto "tipo"
     private Long tipoId;
     private String tipoNombre;
-//
-//    // Nueva propiedad: la imagen en Base64
-//    private String foto;
 }

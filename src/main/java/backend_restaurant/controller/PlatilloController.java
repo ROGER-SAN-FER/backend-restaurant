@@ -1,6 +1,7 @@
 package backend_restaurant.controller;
 
 import backend_restaurant.dto.PlatilloDto;
+import backend_restaurant.mapper.PlatilloMapper;
 import backend_restaurant.model.Platillo;
 import backend_restaurant.service.PlatilloService;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PlatilloController {
 
-    private final PlatilloMapperTradicional mapper;
+    private final PlatilloMapper mapper;
     private final PlatilloService platilloService;
 
 

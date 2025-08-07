@@ -1,7 +1,7 @@
 # activar cierto perfil
 spring:
   profiles:
-    active: prod
+    active: dev
 
 # configuración general
 springdoc:
