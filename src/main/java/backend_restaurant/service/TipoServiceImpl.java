@@ -2,23 +2,19 @@ package backend_restaurant.service;
 
 import backend_restaurant.model.Tipo;
 import backend_restaurant.repository.TipoRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 
 @Service
-@Transactional // Si lanza una excepción unchecked (por defecto cualquier RuntimeException), Spring hace rollback de todo lo que se haya hecho hasta ese momento.
+@Transactional
+@RequiredArgsConstructor
 public class TipoServiceImpl implements TipoService {
 
-    @Autowired
-    private TipoRepository tipoRepo;
-
-//    private final TipoRepository tipoRepo;
-//
-//    public TipoServiceImpl(TipoRepository tipoRepo) {
-//        this.tipoRepo = tipoRepo;
-//    }
+    private final TipoRepository tipoRepo;
 
     @Override
     @Transactional(readOnly = true)
