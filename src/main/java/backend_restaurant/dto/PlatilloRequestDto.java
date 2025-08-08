@@ -5,13 +5,9 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class PlatilloDto {
-    private Long id;
+public class PlatilloRequestDto {
     private String nombre;
     private Double precio;
     private List<String> insumos;
-
-    // Solo muestro el ID y nombre del tipo del objeto "tipo"
     private Long tipoId;
-    private String tipoNombre;
 }
