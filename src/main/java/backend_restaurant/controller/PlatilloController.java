@@ -5,6 +5,7 @@ import backend_restaurant.dto.PlatilloResponseDto;
 import backend_restaurant.mapper.PlatilloMapper;
 import backend_restaurant.model.Platillo;
 import backend_restaurant.service.PlatilloService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,7 +42,7 @@ public class PlatilloController {
 
     // crear platillo
     @PostMapping
-    public ResponseEntity<PlatilloResponseDto> crear(@RequestBody PlatilloRequestDto dto) {
+    public ResponseEntity<PlatilloResponseDto> crear(@RequestBody @Valid PlatilloRequestDto dto) {
         Platillo platillo = mapper.toEntity(dto);
         Platillo platilloCreado = platilloService.crear(platillo);
         return ResponseEntity
