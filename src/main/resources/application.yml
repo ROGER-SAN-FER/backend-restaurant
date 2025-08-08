@@ -76,6 +76,13 @@ spring:
             script:
               action: validate
 
+#Activar devtools
+  devtools:
+    restart:
+      enabled: true
+    livereload:
+      enabled: true
+
 ---
 # perfil de producción
 spring:
