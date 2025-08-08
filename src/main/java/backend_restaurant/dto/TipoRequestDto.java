@@ -9,7 +9,7 @@ import lombok.Data;
 public class TipoRequestDto {
 
     @NotBlank(message = "{message.nombre.NotBlank}")
-    @Size(min = 4, max = 25, message = "{message.nombre.Size}")
+    @Size(min = 4, max = 35, message = "{message.nombre.Size}")
     @NotEmpty(message = "{message.nombre.NotEmpty}")
     private String nombre;
 }
