@@ -2,6 +2,7 @@ package backend_restaurant.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
@@ -9,7 +10,8 @@ import lombok.Data;
 @JsonIgnoreProperties(ignoreUnknown = false)
 public class TipoRequestDto {
 
-    @NotBlank(message = "El nombre es obligatorio")
-    @Size(min = 4, max = 25, message = "El nombre debe tener entre 2 y 50 caracteres")
+    @NotBlank(message = "{TipoRequestDto.nombre.NotBlank}")
+    @Size(min = 4, max = 25, message = "{TipoRequestDto.nombre.Size}")
+    @NotNull(message = "{TipoRequestDto.nombre.NotNull}")
     private String nombre;
 }
