@@ -123,6 +123,12 @@
             <scope>test</scope>
         </dependency>
 
+        <!--H2 para test de BackendRestaurantApplicationTests-->
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>
