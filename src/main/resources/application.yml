@@ -25,6 +25,27 @@ server:
     include-message: always
     include-binding-errors: always
 
+# Info de app
+info:
+  app:
+    nombre: "backend-restaurant"
+    version: "1.0.1"
+    autor: "Roger Roy Sánchez Fernández"
+    email: "roger190892@gmail.com"
+    descripcion: "API de gestión de platillos para restaurantes"
+    entorno: "producción"
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+  info:
+    env:
+      enabled: true  # <- permite exponer variables desde 'info'
 ---
 # perfil de desarrollo
 spring:

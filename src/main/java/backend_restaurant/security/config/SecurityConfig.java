@@ -44,7 +44,8 @@ public class SecurityConfig {
                                     .requestMatchers(HttpMethod.GET, "/api/tipos/**").permitAll()
 //                                    .requestMatchers(HttpMethod.GET, "/api/platillos/**").authenticated()
 //                                    .requestMatchers(HttpMethod.GET, "/api/tipos/**").authenticated()
-                                    // Restringir POST, PUT, DELETE solo a ADMIN
+                                    // Restringir GET, POST, PUT, DELETE solo a ADMIN
+                                    .requestMatchers(HttpMethod.GET, "/actuator/**").hasRole("ADMIN")
                                     .requestMatchers(HttpMethod.POST, "/api/platillos/**").hasRole("ADMIN")
                                     .requestMatchers(HttpMethod.POST, "/api/tipos/**").hasRole("ADMIN")
                                     .requestMatchers(HttpMethod.PUT, "/api/platillos/**").hasRole("ADMIN")
