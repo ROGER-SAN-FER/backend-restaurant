@@ -11,20 +11,18 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
 @Service
-@Transactional
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class TipoServiceImpl implements TipoService {
 
     private final TipoRepository tipoRepo;
 
     @Override
-    @Transactional(readOnly = true)
     public List<Tipo> listarTodos() {
         return tipoRepo.findAll();
     }
 
     @Override
-    @Transactional(readOnly = true)
     public Tipo obtenerPorId(Long id) {
         return tipoRepo.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Tipo no encontrado"));

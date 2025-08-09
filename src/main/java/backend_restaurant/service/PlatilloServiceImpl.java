@@ -12,6 +12,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class PlatilloServiceImpl implements PlatilloService {
 
     private final PlatilloRepository platilloRepo;
@@ -19,13 +20,11 @@ public class PlatilloServiceImpl implements PlatilloService {
 
 
     @Override
-    @Transactional(readOnly = true)
     public List<Platillo> listarTodos() {
         return platilloRepo.findAll();
     }
 
     @Override
-    @Transactional(readOnly = true)
     public Platillo obtenerPorId(Long id) {
         return platilloRepo.findById(id)
                 .orElseThrow(() -> new RuntimeException("Platillo no encontrado"));
