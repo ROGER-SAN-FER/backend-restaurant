@@ -30,8 +30,4 @@ public class Platillo {
     )
     @JsonBackReference        // Lado “hijo” en la serialización JSON; evita ciclos con Tipo
     private Tipo tipo;        // Tipo al que pertenece este Platillo (entrante, principal, postre…)
-//
-//    @Lob
-//    @Column(name = "foto")
-//    private byte[] foto;
 }

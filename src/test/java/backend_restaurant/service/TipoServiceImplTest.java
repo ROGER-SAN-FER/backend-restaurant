@@ -9,6 +9,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Arrays;
 import java.util.List;
@@ -68,13 +70,16 @@ class TipoServiceImplTest {
     }
 
     @Test
-    void obtenerPorId_debeLanzarExcepcionCuandoNoExiste() {
+    void obtenerPorId_debeLanzarNotFoundCuandoNoExiste() {
         // Arrange
         when(tipoRepo.findById(1L)).thenReturn(Optional.empty());
 
         // Act & Assert
-        RuntimeException ex = assertThrows(RuntimeException.class, () -> tipoService.obtenerPorId(1L));
-        assertEquals("Tipo no encontrado", ex.getMessage());
+        var ex = assertThrows(ResponseStatusException.class,
+                () -> tipoService.obtenerPorId(1L));
+
+        assertEquals(HttpStatus.NOT_FOUND, ex.getStatusCode());
+        assertEquals("Tipo no encontrado", ex.getReason());
         verify(tipoRepo, times(1)).findById(1L);
     }
 

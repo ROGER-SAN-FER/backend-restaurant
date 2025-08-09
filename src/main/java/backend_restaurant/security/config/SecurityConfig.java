@@ -3,6 +3,7 @@ package backend_restaurant.security.config;
 import backend_restaurant.security.service.UserDetailsServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -20,6 +21,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
+@Profile("!test")
 public class SecurityConfig {
 
     @Bean
@@ -42,16 +44,19 @@ public class SecurityConfig {
                                     // Permitir todos los GET sin autenticación
                                     .requestMatchers(HttpMethod.GET, "/api/platillos/**").permitAll()
                                     .requestMatchers(HttpMethod.GET, "/api/tipos/**").permitAll()
-//                                    .requestMatchers(HttpMethod.GET, "/api/platillos/**").authenticated()
-//                                    .requestMatchers(HttpMethod.GET, "/api/tipos/**").authenticated()
-                                    // Restringir GET, POST, PUT, DELETE solo a ADMIN
-                                    .requestMatchers(HttpMethod.GET, "/actuator/**").hasRole("ADMIN")
+                                    // Restringir POST, PUT, DELETE solo a ADMIN
                                     .requestMatchers(HttpMethod.POST, "/api/platillos/**").hasRole("ADMIN")
                                     .requestMatchers(HttpMethod.POST, "/api/tipos/**").hasRole("ADMIN")
                                     .requestMatchers(HttpMethod.PUT, "/api/platillos/**").hasRole("ADMIN")
                                     .requestMatchers(HttpMethod.PUT, "/api/tipos/**").hasRole("ADMIN")
                                     .requestMatchers(HttpMethod.DELETE, "/api/platillos/**").hasRole("ADMIN")
                                     .requestMatchers(HttpMethod.DELETE, "/api/tipos/**").hasRole("ADMIN")
+
+                                    //Para swagger (documentacion)
+                                    .requestMatchers("/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**").permitAll()
+
+                                    //Para actuator (metrics, info, health, etc)
+                                    .requestMatchers(HttpMethod.GET, "/actuator/**").hasRole("ADMIN")
                                     .anyRequest().denyAll();
                         }
                 ).build();
