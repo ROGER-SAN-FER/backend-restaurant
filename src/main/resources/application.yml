@@ -30,8 +30,19 @@ server:
 spring:
   cache:
     type: caffeine
+    cache-names:
+      - platillos:list
+      - tipos:list
+      - platillos
+      - tipos
     caffeine:
-      spec: maximumSize=10000,expireAfterWrite=10m
+      spec: maximumSize=10000,expireAfterWrite=10m,recordStats
+
+#spring:
+#  cache:
+#    type: caffeine
+#    caffeine:
+#      spec: maximumSize=10000,expireAfterWrite=10m
 
 # Info de app
 info:
