@@ -19,6 +19,7 @@ public class Platillo {
     private String nombre;
     private Double precio;
     private List<String> insumos;
+    private String FotoPath;
 
     @ManyToOne(
             fetch = FetchType.LAZY, // No carga el Tipo hasta que se llame a getTipo()

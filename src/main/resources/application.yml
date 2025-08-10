@@ -102,6 +102,17 @@ spring:
     livereload:
       enabled: true
 
+#Conexión Supabase para fotos
+supabase:
+  url: ${STORAGE_URL}
+  service-key: ${SUPABASE_SERVICE_ROLE}
+  bucket: ${STORAGE_BUCKET}
+
+#Para limitar los tamaños de archivos
+servlet:
+  multipart:
+    max-file-size: 2MB       # Tamaño máximo por archivo (puedes poner 1MB, 5MB, etc.)
+    max-request-size: 7MB
 ---
 # perfil para test
 spring:

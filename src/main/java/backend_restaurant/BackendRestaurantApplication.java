@@ -13,6 +13,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Profile;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.sql.DataSource;
 import java.util.List;
@@ -36,6 +38,39 @@ public class BackendRestaurantApplication {
         }
     }
 
+    @Bean
+    @Profile("dev") // solo en perfil dev
+    CommandLineRunner init(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+        return args -> {
+            if (userRepository.findUserEntityByUsername("admin").isEmpty()) {
+                PermissionEntity create = PermissionEntity.builder().name("CREATE").build();
+                PermissionEntity read = PermissionEntity.builder().name("READ").build();
+                PermissionEntity update = PermissionEntity.builder().name("UPDATE").build();
+                PermissionEntity delete = PermissionEntity.builder().name("DELETE").build();
+                PermissionEntity refactor = PermissionEntity.builder().name("REFACTOR").build();
+
+                RoleEntity roleAdmin = RoleEntity.builder()
+                        .roleEnum(RoleEnum.ADMIN)
+                        .permissionsList(Set.of(create, read, update, delete, refactor))
+                        .build();
+
+                UserEntity adminUser = UserEntity.builder()
+                        .username("admin")
+                        .password(passwordEncoder.encode("qwerty"))
+                        .enabled(true)
+                        .accountNonExpired(true)
+                        .accountNonLocked(true)
+                        .credentialsNonExpired(true)
+                        .rolesList(Set.of(roleAdmin))
+                        .build();
+
+                userRepository.save(adminUser);
+            }
+        };
+    }
+
+
+//    Para primera ejecución en local de la api con conexión a bd de producción
 //    @Bean
 //    CommandLineRunner init(UserRepository userRepository) {
 //        return args -> {

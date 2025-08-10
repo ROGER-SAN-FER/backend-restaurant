@@ -1,0 +1,43 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres:16
+    container_name: restaurant-db
+    environment:
+      POSTGRES_DB: restaurant
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5433:5432"             # puerto host:contenedor / host 5433 por conflictos con servidor local pg
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d restaurant"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: restaurant-api
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+      # OJO: en contenedor, usa host "db" en vez de localhost:
+      DB_URL_DEV: jdbc:postgresql://db:5432/restaurant
+      DB_USER_DEV: postgres
+      DB_PASSWORD_DEV: postgres
+      # si usas otras vars (Supabase, etc.) añádelas aquí
+      # === Supabase (falsos por ahora) ===
+      STORAGE_URL: https://dummy.supabase.co
+      SUPABASE_SERVICE_ROLE: dummy_service_role_key
+      STORAGE_BUCKET: dummy-bucket
+    ports:
+      - "8080:8080"
+volumes:
+  pgdata:
