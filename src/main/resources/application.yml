@@ -14,17 +14,24 @@ springdoc:
 
 logging:
   level:
-    org:
-      springframework:
-        web: DEBUG
-        security: DEBUG
-      hibernate: ERROR
+    org.springframework.cache: TRACE
+    org.springframework.cache.interceptor.CacheInterceptor: TRACE
+    org.springframework.web: DEBUG
+    org.springframework.security: DEBUG
+    org.hibernate.SQL: DEBUG         # (opcional: para ver SQL)
+    org.hibernate.orm.jdbc.bind: TRACE # (opcional: para ver parámetros)
 
 server:
   port: ${PORT:8080}
   error:
     include-message: always
     include-binding-errors: always
+
+spring:
+  cache:
+    type: caffeine
+    caffeine:
+      spec: maximumSize=10000,expireAfterWrite=10m
 
 # Info de app
 info:
