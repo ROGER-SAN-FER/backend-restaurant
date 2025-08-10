@@ -1,6 +1,7 @@
 package backend_restaurant.security.config;
 
 import backend_restaurant.security.service.UserDetailsServiceImpl;
+import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -56,7 +57,9 @@ public class SecurityConfig {
                                     .requestMatchers("/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**").permitAll()
 
                                     //Para actuator (metrics, info, health, etc)
-                                    .requestMatchers(HttpMethod.GET, "/actuator/**").hasRole("ADMIN")
+                                    .requestMatchers(EndpointRequest.to("health","info")).permitAll()
+                                    .requestMatchers(EndpointRequest.to("metrics","caches")).hasAnyRole("ADMIN","ACTUATOR")
+                                    .requestMatchers("/actuator/metrics/**", "/actuator/caches/**").hasAnyRole("ADMIN","ACTUATOR")
                                     .anyRequest().denyAll();
                         }
                 ).build();
