@@ -60,6 +60,7 @@ public class SecurityConfig {
                                     .requestMatchers(EndpointRequest.to("health","info")).permitAll()
                                     .requestMatchers(EndpointRequest.to("metrics","caches")).hasAnyRole("ADMIN","ACTUATOR")
                                     .requestMatchers("/actuator/metrics/**", "/actuator/caches/**").hasAnyRole("ADMIN","ACTUATOR")
+                                    .requestMatchers("/error").permitAll()
                                     .anyRequest().denyAll();
                         }
                 ).build();
