@@ -171,6 +171,29 @@
                 </configuration>
             </plugin>
 
+            <!-- Para exportar documentación swagger-->
+            <plugin>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-maven-plugin</artifactId>
+                <version>1.5</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <!-- si tu app está levantada en 8080 -->
+                            <apiDocsUrl>http://localhost:8080/v3/api-docs</apiDocsUrl>
+                            <outputFileName>openapi.json</outputFileName>
+                            <outputDir>${project.build.directory}</outputDir>
+                            <skip>false</skip>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+
+
             <!-- Ejecuta *Test.java -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
