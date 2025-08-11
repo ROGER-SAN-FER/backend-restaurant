@@ -23,7 +23,7 @@ public class OpenApiConfig {
                          de tipos y platillos, también se puede guardar fotos por platillo.\n
                         **Desarrollador:** Roger Roy Sánchez Fernández  \n
                         **Correo:** roger190892@gmail.com  \n
-                        **LinkedIn:** https://github.com/ROGER-SAN-FER  \n
+                        **LinkedIn:** https://www.linkedin.com/in/roger-sanchez-fernandez/  \n
                         **GitHub:** https://github.com/ROGER-SAN-FER
                         """
                         ))
