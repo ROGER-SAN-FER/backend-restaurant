@@ -31,15 +31,23 @@ public class SupabaseStorageService {
      * Sube un archivo (upsert=true sobrescribe si existe)
      */
     public String upload(MultipartFile file, String dir) {
-        String filename = Optional.ofNullable(file.getOriginalFilename()).orElse(UUID.randomUUID() + ".bin");
-        String objectPath = (dir == null || dir.isBlank()) ? filename : dir.replaceAll("^/|/$", "") + "/" + filename;
+        // Obtener nombre original o uno aleatorio si no existe
+        String originalName = Optional.ofNullable(file.getOriginalFilename())
+                .orElse(UUID.randomUUID() + ".bin");
+
+        // Prefijo con timestamp para evitar sobreescribir
+        String filename = System.currentTimeMillis() + "_" + originalName;
+
+        // Construir ruta dentro del bucket
+        String objectPath = (dir == null || dir.isBlank())
+                ? filename
+                : dir.replaceAll("^/|/$", "") + "/" + filename;
 
         MediaType contentType = Optional.ofNullable(file.getContentType())
                 .map(MediaType::parseMediaType)
                 .orElse(MediaType.APPLICATION_OCTET_STREAM);
 
-        // POST /storage/v1/object/{bucket}/{object}
-        // Header esperado: x-upsert: true
+        // Subida a Supabase (upsert true por si hay otro archivo con mismo nombre exacto)
         supabaseWebClient.post()
                 .uri(uriBuilder -> uriBuilder
                         .path("/storage/v1/object/{bucket}/{object}")
@@ -51,8 +59,9 @@ public class SupabaseStorageService {
                 .toBodilessEntity()
                 .block();
 
-        return objectPath; // devuelve la ruta del objeto (útil para guardarla en la BD)
+        return objectPath; // Ruta guardada en BD
     }
+
 
     /**
      * URL pública (bucket público) – no requiere llamada a la API
