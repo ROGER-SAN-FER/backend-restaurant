@@ -9,6 +9,7 @@ public class PlatilloResponseDto {
     private String nombre;
     private Double precio;
     private List<String> insumos;
+    private String fotoPath;
 
     // Solo muestro el ID y nombre del tipo del objeto "tipo"
     private Long tipoId;

@@ -109,10 +109,10 @@ supabase:
   bucket: ${STORAGE_BUCKET}
 
 #Para limitar los tamaños de archivos
-servlet:
-  multipart:
-    max-file-size: 2MB       # Tamaño máximo por archivo (puedes poner 1MB, 5MB, etc.)
-    max-request-size: 7MB
+  servlet:
+    multipart:
+      max-file-size: 2MB       # Tamaño máximo por archivo (puedes poner 1MB, 5MB, etc.)
+      max-request-size: 7MB
 ---
 # perfil para test
 spring:
@@ -142,6 +142,11 @@ app:
   version: "1.0-test"
   debug: false
 
+# valores ficticios para supabase (no se conectará, pero evita error de properties faltantes)
+supabase:
+  url: http://dummy-supabase-url
+  service-key: dummy-key
+  bucket: dummy-bucket
 ---
 # perfil de producción
 spring:
@@ -202,3 +207,15 @@ server:
   error:
     include-message: always
     include-binding-errors: always
+
+#Conexión Supabase para fotos
+supabase:
+  url: ${STORAGE_URL}
+  service-key: ${SUPABASE_SERVICE_ROLE}
+  bucket: ${STORAGE_BUCKET}
+
+  #Para limitar los tamaños de archivos
+  servlet:
+    multipart:
+      max-file-size: 2MB       # Tamaño máximo por archivo (puedes poner 1MB, 5MB, etc.)
+      max-request-size: 7MB
