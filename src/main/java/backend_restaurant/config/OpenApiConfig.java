@@ -17,7 +17,16 @@ public class OpenApiConfig {
                 .info(new Info()
                         .title("Restaurant API")
                         .version("1.0")
-                        .description("Documentación de endpoints para el backend del restaurante"))
+                        .description(
+                                """
+                        Documentación de endpoints para el backend del restaurante. Se puede hacer el CRUD 
+                         de tipos y platillos, también se puede guardar fotos por platillo.\n
+                        **Desarrollador:** Roger Roy Sánchez Fernández  \n
+                        **Correo:** roger190892@gmail.com  \n
+                        **LinkedIn:** https://github.com/ROGER-SAN-FER  \n
+                        **GitHub:** https://github.com/ROGER-SAN-FER
+                        """
+                        ))
                 .components(new Components()
                         .addSecuritySchemes("basicAuth",
                                 new SecurityScheme()
